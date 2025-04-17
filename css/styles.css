@@ -1,0 +1,555 @@
+/* Base styles and reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #121212;
+  color: #e0e0e0;
+  min-height: 100vh;
+  padding: 2rem 2rem 0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.6;
+}
+
+h1 {
+  color: #fff;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 2.2rem;
+  background: linear-gradient(45deg, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(123, 97, 255, 0.2);
+}
+
+/* Instructions */
+p {
+  margin: 0.5rem 0;
+  text-align: center;
+  max-width: 700px;
+  color: #b0b0b0;
+}
+
+p strong {
+  color: #fff;
+}
+
+/* Improved button styling that works with original JS */
+#movie, #series ,#searchBtn{
+  background-color: #1e1e1e;
+  color: #909090;
+  border: none;
+  padding: 12px 24px;
+  margin: 0 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+/* Style for active state that will be controlled by your JS */
+#movie:focus, #series:focus,
+#movie:active, #series:active ,
+#searchBtn:active, #searchBtn:active {
+  outline: none;
+}
+
+/* Create a dynamic state that changes appearance based on the movieselected variable */
+#movie,#series,#searchBtn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+/* These styles will be applied when movieselected is false */
+body:has(.inputs #season) #movie ,
+body:has(.inputs #season) #searchBtn {
+  background-color: #1e1e1e;
+  background-image: none;
+  color: #909090;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+body:has(.inputs #season) #series {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.4);
+}
+
+/* Button hover effects */
+#movie:hover, #series:hover , #searchBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Input styling */
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 500px;
+  margin: 1.5rem 0;
+  align-items: center;
+}
+.inputs img{
+  height: 500px;
+  box-shadow: 0 4px 8px 0 rgba(125, 100, 216, 0.2), 0 6px 20px 0 rgba(19, 1, 53, 0.19);
+  width: min-content;
+}
+.inputs input[type=text], #seriesControl input{
+text-align: center;
+}
+
+input {
+  background-color: #1e1e1e;
+  border: 1px solid #3a3a3a;
+  color: #e0e0e0;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+input::placeholder {
+  color: #707070;
+}
+
+/* Watch button */
+#Watch {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 8px 16px rgba(99, 102, 241, 0.2);
+}
+
+#Watch:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(99, 102, 241, 0.3);
+}
+
+#Watch:active {
+  transform: translateY(1px);
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  #movie, #series {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Add animation for inputs appearing */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#season, #episode {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+#importedNotice{
+  padding: 5px;
+  background-color: rgb(157, 218, 67);
+  color: #1e1e1e;
+  border-radius: 7px;
+  border:1px  solid rgb(125, 136, 125) ;
+  opacity: .8;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+#importedNotice1{
+  padding: 5px;
+  background-color: rgb(182, 0, 0);
+  color: #fdfdfd;
+  border-radius: 7px;
+  border:1px  solid rgb(109, 39, 11) ;
+  opacity: .8;
+  margin-left: 60px;
+  margin-right: 60px;
+}
+#search{
+  width: 90vw;
+  height:60px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  
+}
+#search button{
+  flex-shrink: 1;
+}
+#seriesControl{
+  display: flex;
+  padding: 5px;
+  margin: 5px;
+  width: 12em;
+}
+#seriesControl input{
+  margin: 5px;
+  align-items: end;
+}
+
+
+
+/* Image hover effects */
+.poster {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.poster:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+}
+
+.poster:active {
+  transform: scale(0.98);
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.7);
+}
+#main{
+  margin-top: 100px;
+
+}
+#main p{
+max-width: 100% !important;
+
+}
+#main p strong{
+  color:rgb(175, 165, 219);
+  
+  }
+
+/* Button effects */
+nav{
+  top: 0;
+  background-color: #121212;
+  position:fixed;
+  width: 100%;
+  padding: 20px 10px 20px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 15px;
+}
+nav button ,.buttonIndex{
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+nav button:hover ,.buttonIndex:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+nav button:focus,.buttonIndex:focus {
+  transform: translateY(1px);
+  background: linear-gradient(135deg, #222470, #450acf);
+
+}
+
+
+
+
+
+/* Fade-in animation for smoother appearance */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.poster, nav button,.buttonIndex, input {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+#movie-container{
+  margin-top: 30px;
+  width: 95vw;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* As many 200px wide columns as can fit in the container */
+  gap: 20px;
+  text-align: center;
+
+}
+#movie-container>div{
+  width: 100%;
+ 
+
+}
+#movie-container>div:hover{
+  background-color:#222470;
+  border-radius: 10px;
+  transition: background-color ease-in-out .3s;
+}
+#movie-container>div>div+div{
+  display: flex;
+  justify-content: space-around;
+}
+#movie-container>div>div img{
+  padding-top: 10%;
+  width: 90%;
+  border-radius: 3px;
+}
+
+
+#results{
+  width: 90%;
+  height: auto;
+  display: flex;
+  overflow:scroll;
+  margin: 20px;
+  overflow-y: hidden;
+}
+#results::-webkit-scrollbar{
+  height: 10px;
+  width: 4px;
+  background: rgba(0, 0, 0, 0.0); 
+}
+
+#results::-webkit-scrollbar-thumb:horizontal{
+  background: #ffffff;
+  border-radius: 10px;
+}
+#results::-webkit-scrollbar-thumb:horizontal:hover {
+  background: #6b6969;
+  border-radius: 10px;
+}
+#results div{
+  height: 100%;
+  width: 90%;
+  margin: 20px;
+}
+#results div a {
+  height: 80%;
+  width: auto;
+}
+#results div a img{
+  height: 300px;
+  width: auto;
+  box-shadow:0px 0px 20px #573f3f;
+  border-radius: 10px;
+}
+#popUp {
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;        
+  background: rgba(0,0,0,0.7); 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  z-index: 1000;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+#popUp > div {
+  background: #1e1e1e;
+  color: #e0e0e0;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(73, 75, 219, 0.5);
+}
+
+#popUp label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+#popUp input {
+  width: 100%;
+  padding: 10px;
+  background-color: #1e1e1e;
+  border: 1px solid #3a3a3a;
+  color: #e0e0e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+#popUp input:focus {
+  border-color: #6366f1;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+#popUp button {
+  padding: 8px 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+#popUp button {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+}
+#popUp button:hover {
+  box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
+  transform: translateY(-2px);
+}
+#main-footer {
+  height: 50px;
+  width: 99.8vw;
+  color: #e0e0e0;
+  border-top: 1px solid #2c2c2c;
+  position:relative;
+  bottom: 0;
+  margin: 30px 0 10px 0;
+
+}
+
+.footer-content {
+  width: 100%;
+  display: flex;
+  justify-content:space-evenly;
+  text-align: center;
+  padding-top: 10px;
+  flex-direction: column;
+
+
+}
+.footer-content h6 {
+  color: #b0b0b0;
+}
+.footer-content a{
+  font-size: 15px;
+  font-family:'Times New Roman', Times, serif !important;
+  color: #7e6666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  nav button {
+    padding: 10px 18px;
+    font-size: 0.9rem;
+  }
+  #movie-container{
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* As many 200px wide columns as can fit in the container */
+
+  }
+  nav{
+    position: relative;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+  nav>div+div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+  nav button {
+    padding: 10px 15px;
+    font-weight: 400;
+    margin: 7px;
+   
+  }
+  #movie-container{
+    margin: 0;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* As many 200px wide columns as can fit in the container */
+    gap: 20px;
+    font-size: auto;
+
+  }
+  .movie-card img{
+    box-shadow: 0 4px 8px 0 rgba(125, 100, 216, 0.2), 0 6px 20px 0 rgba(19, 1, 53, 0.19);
+  }
+  .movie-card h3,#results p{
+    font-size: 15px;
+  }
+  .movie-card p{
+    font-size: 11px;
+  }
+  #results div{
+    margin-bottom: 0px;
+  }
+  #results div a img{
+  height: 200px;
+  }
+
+  .inputs img{
+    height: 300px;
+    aspect-ratio: 2 / 3 !important;
+    
+  }
+  
+  #main-footer {
+    margin: 0 0 20px 0;
+  }
+
+  .footer-content a{
+    font-size: 15px;
+    font-family:'Times New Roman', Times, serif !important;
+    color: #7e6666;
+  }
+  #popularity{
+    display: none;
+  }
+  #main{
+    margin-top: 0;
+  }
+
+}
