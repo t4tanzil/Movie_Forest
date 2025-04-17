@@ -1,4 +1,4 @@
-# 🎬 Movie Finder
+# 🎬 Movie Forest
 
 ## 📋 Overview
 **Movie Finder** is a web application that allows users to search for and stream movies and TV shows. It leverages multiple API integrations to provide a seamless viewing experience.
