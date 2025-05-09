@@ -41,7 +41,6 @@ The application extracts IMDb or TMDb IDs from search results and constructs vid
 - Watchlist functionality
 
 ## 📷 Screenshots
-*[Consider adding screenshots of your application here]*
 ![image](https://github.com/user-attachments/assets/5922eb99-b79e-4cde-8965-2e33b4f62525)
 
 ![image](https://github.com/user-attachments/assets/0cb3b630-efda-4526-985b-7a9ad88cfa6d)
