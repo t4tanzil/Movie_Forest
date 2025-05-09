@@ -344,10 +344,11 @@ nav button:focus,.buttonIndex:focus {
 #results{
   width: 90%;
   height: auto;
-  display: flex;
-  overflow:scroll;
-  margin: 20px;
-  overflow-y: hidden;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* As many 200px wide columns as can fit in the container */
+  gap: 20px;
+  text-align: center;
+  overflow-y: scroll;
 }
 #results::-webkit-scrollbar{
   height: 10px;
@@ -368,13 +369,13 @@ nav button:focus,.buttonIndex:focus {
   width: 90%;
   margin: 20px;
 }
-#results div a {
+#results div {
   height: 80%;
   width: auto;
 }
-#results div a img{
+#results div img{
   height: 300px;
-  width: auto;
+  width: 200px;
   box-shadow:0px 0px 20px #573f3f;
   border-radius: 10px;
 }
@@ -391,6 +392,21 @@ nav button:focus,.buttonIndex:focus {
   z-index: 1000;
   animation: fadeIn 0.3s ease forwards;
 }
+#searchTb {
+  position: fixed;
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;        
+  background: rgba(0, 0, 0, 0.774); 
+  display: flex; 
+  flex-direction: column;
+  align-items: center; 
+  z-index: 1000;
+  padding-top:50px ;
+  animation: fadeIn 0.3s ease forwards;
+}
+
 
 #popUp > div {
   background: #1e1e1e;
@@ -422,7 +438,7 @@ nav button:focus,.buttonIndex:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
 }
-#popUp button {
+#popUp button ,#searchTb button{
   padding: 8px 16px;
   font-weight: 600;
   border: none;
@@ -430,13 +446,16 @@ nav button:focus,.buttonIndex:focus {
   cursor: pointer;
   transition: all 0.3s ease;
 }
-#popUp button {
+#popUp button,#searchTb button{
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: white;
 }
-#popUp button:hover {
+#popUp button:hover ,#searchTb button:hover{
   box-shadow: 0 4px 8px rgba(99, 102, 241, 0.3);
   transform: translateY(-2px);
+}
+#searchTb button{
+  height: 60px;
 }
 #main-footer {
   height: 50px;
@@ -552,4 +571,147 @@ nav button:focus,.buttonIndex:focus {
     margin-top: 0;
   }
 
+}
+
+/* === DETAILS PAGE SPECIFIC === */
+.details-card {
+  display: flex;
+  gap: 20px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.details-card img {
+  width: 300px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.details-card > div {
+  flex: 1;
+  min-width: 300px;
+}
+.details-card > div>p {
+  text-align: left;
+}
+
+#seriesControl {
+  display: block;
+  width: 100%;
+  max-width: 90hv;
+  margin-top: 30px;
+}
+
+.season-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.season-box {
+  padding: 10px 20px;
+  background-color: #1e1e1e;
+  color: white;
+  border-radius: 6px;
+  border: 1px solid #444;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  user-select: none;
+}
+
+.season-box:hover {
+  background-color: #2f2f2f;
+  transform: translateY(-2px);
+}
+
+.season-box.active {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+}
+
+.episode-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.episode-box {
+  background: #1e1e1e;
+  color: white;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  height: 200px;
+  transition: height 0.4s ease, background 0.4s ease;
+}
+
+
+.episode-box img {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  z-index: 1;
+}
+
+.episode-box:hover img {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.episode-box h4 {
+  position: relative;
+  z-index: 2;
+  font-size: 18px;
+  margin: 0;
+  text-align: left;
+  padding: 0 10px;
+  transition: transform 0.4s ease, font-size 0.4s ease;
+}
+
+.episode-box:hover h4 {
+  font-size: 20px;
+  transform: translateY(0);
+}
+
+.episode-box p {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  margin: 0;
+  text-align: left;
+  padding: 0 10px;
+  font-size: 14px;
+  color: #ccc;
+  max-height: 90px;
+  overflow-y: auto;
+}
+
+.episode-box:hover p {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.episode-box p::-webkit-scrollbar {
+  width: 6px;
+}
+
+.episode-box p::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 4px;
 }

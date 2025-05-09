@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Details | Movie Forest</title>
+  <link rel="stylesheet" href="css/styles.css">
+
+  <script src="js/content.js" defer></script>
+</head>
+<body>
+    <nav style="position: relative;">
+        <div>
+        <a href="index.html" style="text-decoration: none;color: white;"><img src="Img/logo_icon.png" alt="Icon" style="height:70px; width: auto; border-radius: 15px;"></a>
+
+        </div>
+        <div>
+            <a href="index.html?search=true">
+                <img src="Img/search_icon.png" alt="Icon" style="height:25px; width: auto;">
+              </a>
+        </div>
+    </nav>
+  <div id="details-container" class="details-card" style="position: relative;">
+    <img id="poster" src="Img/No-Image-Placeholder.png" alt="Poster">
+    <div>
+        <h1 id="title"></h1>
+        <p><strong>Overview:</strong></p>
+        <p id="overview"></p>
+      <p><strong>Genres:</strong> <span id="genres"></span></p>
+      <p><strong>Cast:</strong> <span id="cast"></span></p>
+      <p><strong>Production:</strong> <span id="production"></span></p>
+      <p><strong>Country:</strong> <span id="country"></span></p>
+      <p><strong>Duration:</strong> <span id="duration"></span></p>
+    </div>
+  </div>
+
+  <div id="seriesControl" style="display: none;">
+    <div id="seasonBoxes" class="season-grid"></div>
+    <div id="episodeList" class="episode-grid"></div>
+  </div>
+  
+  <button id="Watch" style="display: none;">Play</button>
+  <footer id="main-footer" style="position: relative;">
+    <div class="footer-content">
+        <a href="https://buymeacoffee.com/t4tanzil" style="text-decoration: none;"><b>If you vibe with my work, <span style="color: chocolate;">coffee’s</span> always welcome! 😊</b></a>
+      <h6>&copy; 2025 Movie Finder. All rights reserved.</h6>
+    </div>
+</footer>
+</body>
+</html>
