@@ -22,28 +22,7 @@
 - **Google Custom Search API**: Customized to specifically search for movie/TV show information and extract relevant IMDb/TMDb IDs
 - **VidSrc**: Generates embedded player links using extracted movie/TV show IDs for streaming
 
-## 💻 Code Highlights
-```javascript
-// Example of API integration with TMDB
-function loadMovies(type) {
-    let url;
-    switch(type) {
-        case 'trending':
-            url = `${BASE_URL}trending/all/week?api_key=${API_KEY}`;
-            break;
-        case 'latest':
-            url = `${BASE_URL}movie/now_playing?api_key=${API_KEY}`;
-            break;
-        // More cases...
-    }
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            // Process movie data
-        });
-}
-```
 
 ## 📝 Functionality
 The application extracts IMDb or TMDb IDs from search results and constructs video source URLs. For TV shows, it provides additional functionality to select specific seasons and episodes.
