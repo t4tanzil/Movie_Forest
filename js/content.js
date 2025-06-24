@@ -2,7 +2,7 @@ const API_KEY = '04565bff03b7575bcd4dd06a8d2b5007';
 const IMAGE_BASE = 'http://image.tmdb.org/t/p/w300';
 const info = JSON.parse(localStorage.getItem("mediaInfo"));
 const isTV = info.mediaType === "tv";
-
+console.log(info.mediaType)
 // Elements
 const poster = document.getElementById("poster");
 const title = document.getElementById("title");
@@ -23,6 +23,7 @@ const episodeList = document.getElementById("episodeList");
 fetch(`https://api.themoviedb.org/3/${info.mediaType}/${info.tmdbId}?api_key=${API_KEY}&language=en-US`)
   .then(res => res.json())
   .then(data => {
+    console.log(data)
     poster.src = IMAGE_BASE + data.poster_path;
     title.textContent = data.title || data.name;
     overview.textContent = data.overview;

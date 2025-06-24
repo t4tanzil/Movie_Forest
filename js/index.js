@@ -2,22 +2,27 @@ const API_KEY = '04565bff03b7575bcd4dd06a8d2b5007';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const IMAGE_BASE = 'http://image.tmdb.org/t/p/w300';
 const latest_movie_search = document.getElementById('latest_movie_search');
+let movietypePre="movie"
 
 //populate the latest page
 function loadMovies(type) {
     let url;
+    let movietypePre;
     switch(type) {
         case 'trending':
             url = `${BASE_URL}trending/all/week?api_key=${API_KEY}`;
             break;
         case 'latest':
             url = `${BASE_URL}movie/now_playing?api_key=${API_KEY}`;
+            movietypePre="movie"
             break;
         case 'movie':
             url = `${BASE_URL}movie/popular?api_key=${API_KEY}`;
+            movietypePre="movie";
             break;
         case 'tv':
             url = `${BASE_URL}tv/top_rated?api_key=${API_KEY}`;
+            movietypePre="tv";
             break;
         default:
             return;
@@ -30,7 +35,7 @@ function loadMovies(type) {
             const container = document.getElementById('movie-container');
             container.innerHTML = '';
             data.results.forEach(item => {
-                const mediaType = item.media_type ? item.media_type : 'tv';
+                const mediaType = item.media_type ? item.media_type : movietypePre;
                 const tmdbId = item.id;                
                 const movieCard = document.createElement('div');
                 movieCard.classList.add('movie-card');
@@ -49,7 +54,7 @@ function loadMovies(type) {
         });
 }
 function findFromGal(ismovie, tmdbId) {
-    const mediaType = ismovie === 'tv' ? 'tv' : 'movie';
+    const mediaType = ismovie;
     localStorage.setItem("mediaInfo", JSON.stringify({ tmdbId, mediaType }));
     window.location.href = "content.html";
 }
@@ -66,6 +71,7 @@ function findById(externalId) {
     fetch(`https://api.themoviedb.org/3/find/${externalId}?external_source=${externalSource}`, options)
         .then(res => res.json())
         .then(res => {
+            console.log(res)
             const media = res.tv_results[0] || res.movie_results[0];
             if (media) {
                 const tmdbId = media.id;
