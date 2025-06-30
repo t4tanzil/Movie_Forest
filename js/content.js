@@ -16,7 +16,9 @@ const duration = document.getElementById("duration");
 const release_date=document.getElementById("release_date");
 const body = document.querySelector("body");
 const watchBtn = document.getElementById("Watch");
-
+let useBackupServer = false;
+const server1Btn = document.getElementById("server1Btn");
+const server2Btn = document.getElementById("server2Btn");
 // TV-only
 const seriesControl = document.getElementById("seriesControl");
 const seasonSelect = document.getElementById("seasonSelect");
@@ -123,21 +125,41 @@ function fetchEpisodes(tvId, seasonNumber) {
             </div>
           `;
           epDiv.onclick = () => {
-            const url = `https://vidsrc.icu/embed/tv/${tvId}/${seasonNumber}/${ep.episode_number}`;
-            window.open(url, '_blank');
+            const id = useBackupServer ? info.imdbId || info.tmdbId : info.tmdbId;
+            const base = useBackupServer ? "vidsrc.cc/v2" : "vidsrc.icu";
+            const url = `https://${base}/embed/tv/${id}/${seasonNumber}/${ep.episode_number}?autoPlay=true`;
+            window.open(url, "_blank");
           };
+
           episodeList.appendChild(epDiv);
         });
       });
   }
   
-if(!isTV){
-    watchBtn.style.display="block";
-watchBtn.addEventListener("click", () => {
-  if (watchBtn.disabled) return;
-   const url=`https://vidsrc.icu/embed/movie/${info.tmdbId}`;
-  window.open(url, '_blank');
-});
+if (!isTV) {
+  watchBtn.style.display = "block";
+  watchBtn.addEventListener("click", () => {
+    if (watchBtn.disabled) return;
+
+    let url;
+    if (useBackupServer) {
+      const movieId = info.imdbId || info.tmdbId; // use imdb if available
+      url = `https://vidsrc.cc/v2/embed/movie/${movieId}?autoPlay=true`;
+    } else {
+      url = `https://vidsrc.icu/embed/movie/${info.tmdbId}`;
+    }
+
+    window.open(url, "_blank");
+  });
+}
+function updateServerButtons() {
+  if (useBackupServer) {
+    server2Btn.classList.add("server-btn-active");
+    server1Btn.classList.remove("server-btn-active");
+  } else {
+    server1Btn.classList.add("server-btn-active");
+    server2Btn.classList.remove("server-btn-active");
+  }
 }
 // View toggle for episodes
 document.getElementById("toggleViewBtn").addEventListener("click", function () {
@@ -147,4 +169,14 @@ document.getElementById("toggleViewBtn").addEventListener("click", function () {
     ? "🔳 Grid View"
     : "📋 List View";
 });
-
+// handle server change
+server1Btn.addEventListener("click", () => {
+  useBackupServer = false;
+  updateServerButtons();
+});
+server2Btn.addEventListener("click", () => {
+  useBackupServer = true;
+  updateServerButtons();
+});
+// Set initial state
+updateServerButtons();

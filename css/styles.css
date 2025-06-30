@@ -829,4 +829,48 @@ nav button:focus,.buttonIndex:focus {
     border-color: #8b5cf6;
     font-weight: bold;
 }
+/* 🔁 Toggle View Button */
+#toggleViewBtn {
+  padding: 8px 16px;
+  background-color: #333;
+  color: #fff;
+  font-size: 14px;
+  border: 1px solid #555;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#toggleViewBtn:hover {
+  background-color: #444;
+}
+
+/* Server Button Shared Style */
+#server1Btn,
+#server2Btn {
+  padding: 8px 16px;
+  background-color: #1e1e1e;
+  color: white;
+  border-radius: 6px;
+  border: 1px solid #444;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  margin-right: 10px;
+}
+
+/* Hover Effect */
+#server1Btn:hover,
+#server2Btn:hover {
+  background-color: #2f2f2f;
+  transform: translateY(-1px);
+}
+
+/* Active Button (based on JS adding .active class) */
+.server-btn-active {
+  background: linear-gradient(135deg, #2c2d52, #592fbb);
+  color: white;
+  box-shadow: 0 0 10px rgba(38, 42, 65, 0.4);
+  font-weight: bold;
+}
+
 
