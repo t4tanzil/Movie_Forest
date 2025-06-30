@@ -12,6 +12,7 @@ const cast = document.getElementById("cast");
 const production = document.getElementById("production");
 const country = document.getElementById("country");
 const duration = document.getElementById("duration");
+const release_date=document.getElementById("release_date");
 const watchBtn = document.getElementById("Watch");
 
 // TV-only
@@ -31,6 +32,25 @@ fetch(`https://api.themoviedb.org/3/${info.mediaType}/${info.tmdbId}?api_key=${A
     production.textContent = (data.production_companies || []).map(p => p.name).join(', ');
     country.textContent = (data.production_countries || []).map(c => c.name).join(', ');
     duration.textContent = isTV ? `${data.episode_run_time[0]} m` : `${data.runtime} m`;
+    const today = new Date();
+    const releaseDateStr = data.release_date || data.first_air_date || '';
+    const releaseDate = releaseDateStr ? new Date(releaseDateStr) : null;
+
+    if (releaseDate && releaseDate > today) {
+      release_date.textContent = releaseDateStr;
+      watchBtn.disabled = true;
+      watchBtn.style.opacity = 0.5;
+      watchBtn.style.cursor = "not-allowed";
+      watchBtn.textContent = "This content is not released yet.";
+
+    } else {
+      release_date.textContent = releaseDateStr;
+      watchBtn.disabled = false;
+      watchBtn.style.opacity = 1;
+      watchBtn.style.cursor = "pointer";
+      watchBtn.title = "";
+    }
+
 
     if (isTV) {
       seriesControl.style.display = "block";
@@ -94,9 +114,9 @@ function fetchEpisodes(tvId, seasonNumber) {
   }
   
 if(!isTV){
-    watchBtn.style="display=block;"
+    watchBtn.style.display="block";
 watchBtn.addEventListener("click", () => {
-    console.log(info.tmdbId)
+  if (watchBtn.disabled) return;
    const url=`https://vidsrc.icu/embed/movie/${info.tmdbId}`;
   window.open(url, '_blank');
 });
