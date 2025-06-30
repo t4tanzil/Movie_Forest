@@ -2,27 +2,32 @@ const API_KEY = '04565bff03b7575bcd4dd06a8d2b5007';
 const BASE_URL = 'https://api.themoviedb.org/3/';
 const IMAGE_BASE = 'http://image.tmdb.org/t/p/w300';
 const latest_movie_search = document.getElementById('latest_movie_search');
+let currentPage = 1;
+let currentType = 'trending';
 let movietypePre="movie"
 
 //populate the latest page
-function loadMovies(type) {
+function loadMovies(type, page = 1) {
     let url;
-    let movietypePre;
-    switch(type) {
+    currentType = type;
+    currentPage = page;
+
+    switch (type) {
         case 'trending':
-            url = `${BASE_URL}trending/all/week?api_key=${API_KEY}`;
+            url = `${BASE_URL}trending/all/week?api_key=${API_KEY}&page=${page}`;
+            movietypePre = "movie";
             break;
         case 'latest':
-            url = `${BASE_URL}movie/now_playing?api_key=${API_KEY}`;
-            movietypePre="movie"
+            url = `${BASE_URL}movie/now_playing?api_key=${API_KEY}&page=${page}`;
+            movietypePre = "movie";
             break;
         case 'movie':
-            url = `${BASE_URL}movie/popular?api_key=${API_KEY}`;
-            movietypePre="movie";
+            url = `${BASE_URL}movie/popular?api_key=${API_KEY}&page=${page}`;
+            movietypePre = "movie";
             break;
         case 'tv':
-            url = `${BASE_URL}tv/top_rated?api_key=${API_KEY}`;
-            movietypePre="tv";
+            url = `${BASE_URL}tv/top_rated?api_key=${API_KEY}&page=${page}`;
+            movietypePre = "tv";
             break;
         default:
             return;
@@ -32,6 +37,7 @@ function loadMovies(type) {
         .then(response => response.json())
         .then(data => {
             console.log(data);
+            updatePagination(data.total_pages);
             const container = document.getElementById('movie-container');
             container.innerHTML = '';
             data.results.forEach(item => {
@@ -45,12 +51,30 @@ function loadMovies(type) {
                     <h3>${item.title || item.name}</h3>
                     </div>
                     <div>
-                    <p> ${item.release_date ? item.release_date: ''}</p>
-                    <p id="popularity">${item.popularity ? item.popularity: ''}</p>
+                    <p> ${item.release_date ? item.release_date:item.first_air_date}</p>
+                    <p>Rating: <span class="rating" data-score="${item.vote_average}">${item.vote_average ? Math.round(item.vote_average * 10.5) + '%' : 'N/A'}</span></p>
                     </div>
                 `;
+                const ratingEl = movieCard.querySelector('.rating');
+                const score = parseFloat(ratingEl.dataset.score);
+
+                if (!isNaN(score)) {
+                    if (score >= 7.5) {
+                        ratingEl.classList.add('green');
+                    } else if (score >= 5.5) {
+                        ratingEl.classList.add('yellow');
+                    } else {
+                        ratingEl.classList.add('red');
+                    }
+                }
+
                 container.appendChild(movieCard);
+                
             });
+           
+            // Disable/enable prev/next buttons based on page and total_pages
+            document.getElementById("prevPage").disabled = currentPage <= 1;
+            document.getElementById("nextPage").disabled = currentPage >= data.total_pages;
         });
 }
 function findFromGal(ismovie, tmdbId) {
@@ -177,3 +201,54 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("latest_movie_search")?.click();
     }
   });
+function updatePagination(totalPages) {
+    const pageNumbers = document.getElementById("pageNumbers");
+    pageNumbers.innerHTML = "";
+
+    let startPage = Math.max(1, currentPage - 5);
+    let endPage = Math.min(startPage + 9, totalPages);
+
+    if (endPage - startPage < 9) {
+        startPage = Math.max(1, endPage - 9);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+        const pageBtn = document.createElement("button");
+        pageBtn.textContent = i;
+        if (i === currentPage) {
+            pageBtn.classList.add("active-page");
+        }
+        pageBtn.addEventListener("click", () => {
+            currentPage = i;
+            loadMovies(currentType, currentPage);
+        });
+        pageNumbers.appendChild(pageBtn);
+    }
+
+    document.getElementById("firstPage").disabled = currentPage === 1;
+    document.getElementById("prevPage").disabled = currentPage === 1;
+    document.getElementById("nextPage").disabled = currentPage === totalPages;
+    document.getElementById("lastPage").disabled = currentPage === totalPages;
+}
+document.getElementById("firstPage").addEventListener("click", () => {
+    currentPage = 1;
+    loadMovies(currentType, currentPage);
+});
+
+document.getElementById("lastPage").addEventListener("click", () => {
+    currentPage += 10; // or a large number; will get clamped by API
+    loadMovies(currentType, currentPage);
+});
+
+document.getElementById("nextPage").addEventListener("click", () => {
+    currentPage++;
+    loadMovies(currentType, currentPage);
+});
+
+document.getElementById("prevPage").addEventListener("click", () => {
+    if (currentPage > 1) {
+        currentPage--;
+        loadMovies(currentType, currentPage);
+    }
+});
+

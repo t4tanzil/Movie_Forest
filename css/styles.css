@@ -17,6 +17,13 @@ body {
   align-items: center;
   line-height: 1.6;
 }
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.6); /* dark overlay */
+    z-index: -1;
+}
 
 h1 {
   color: #fff;
@@ -187,27 +194,6 @@ input::placeholder {
   animation: fadeIn 0.3s ease forwards;
 }
 
-#importedNotice{
-  padding: 5px;
-  background-color: rgb(157, 218, 67);
-  color: #1e1e1e;
-  border-radius: 7px;
-  border:1px  solid rgb(125, 136, 125) ;
-  opacity: .8;
-  margin-left: 60px;
-  margin-right: 60px;
-}
-
-#importedNotice1{
-  padding: 5px;
-  background-color: rgb(182, 0, 0);
-  color: #fdfdfd;
-  border-radius: 7px;
-  border:1px  solid rgb(109, 39, 11) ;
-  opacity: .8;
-  margin-left: 60px;
-  margin-right: 60px;
-}
 #search{
   width: 90vw;
   height:60px;
@@ -231,7 +217,6 @@ input::placeholder {
 }
 
 
-
 /* Image hover effects */
 .poster {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -240,7 +225,7 @@ input::placeholder {
 
 .poster:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+  box-shadow: 0 0 20px rgba(71, 19, 30, 0.5);
 }
 
 .poster:active {
@@ -273,7 +258,7 @@ nav{
   border-radius: 15px;
 }
 nav button ,.buttonIndex{
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  background: transparent;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -612,7 +597,7 @@ nav button:focus,.buttonIndex:focus {
   margin: 15px 0;
 }
 
-.season-box {
+.season-box,#toggleViewBtn {
   padding: 10px 20px;
   background-color: #1e1e1e;
   color: white;
@@ -623,7 +608,7 @@ nav button:focus,.buttonIndex:focus {
   user-select: none;
 }
 
-.season-box:hover {
+.season-box:hover,#toggleViewBtn {
   background-color: #2f2f2f;
   transform: translateY(-2px);
 }
@@ -716,3 +701,132 @@ nav button:focus,.buttonIndex:focus {
   background-color: #555;
   border-radius: 4px;
 }
+/* EPISODE LIST VIEW */
+/* Toggle List View */
+#episodeList.list-view {
+  display: block;
+  
+}
+
+#episodeList.list-view .episode-box {
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  background-color: transparent;
+}
+#episodeList.list-view .episode-box:hover {
+  display: flex;
+  flex-direction: row;
+  height: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+#episodeList.list-view .episode-box img {
+  width: 160px;
+  height: 100px;
+  object-fit: cover;
+  position: static;
+}
+
+#episodeList.list-view .episode-box div {
+  flex: 1;
+  padding: 10px;
+}
+
+#episodeList.list-view .episode-box:hover img {
+  opacity: 1;
+  transform: none;
+}
+
+#episodeList.list-view .episode-box h4,
+#episodeList.list-view .episode-box p {
+  transform: none;
+  opacity: 1;
+}
+
+/* CSS for rating */
+.rating {
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 5px;
+  color: white;
+}
+
+/* Color categories */
+.rating.green {
+  background-color: #2ecc71; /* Green */
+}
+
+.rating.yellow {
+  background-color: #f1c40f; /* Yellow */
+  color: black;
+}
+
+.rating.red {
+  background-color: #e74c3c; /* Red */
+}
+
+.rating {
+  transition: background-color 1.5s ease;
+}
+
+/* pages desgine */
+#pagination {
+  text-align: center;
+  margin: 30px 0;
+}
+
+#pagination button {
+  background-color: #222;
+  color: #fff;
+  border: 2px solid #444;
+  padding: 8px 16px;
+  margin: 0 5px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+#pagination button:hover:not(:disabled) {
+  background-color: #6366f1;
+  border-color: #8b5cf6;
+  color: white;
+}
+
+#pagination button:disabled {
+  background-color: #999;
+  color: #eee;
+  border-color: #888;
+  cursor: not-allowed;
+}
+
+#pageNumber {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 10px;
+  color: #fff;
+}
+#pageNumbers button {
+    background-color: #222;
+    color: white;
+    border: 1px solid #555;
+    padding: 6px 12px;
+    margin: 2px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#pageNumbers button:hover {
+    background-color: #8b5cf6;
+    color: white;
+    border-color: #8b5cf6;
+}
+
+#pageNumbers .active-page {
+    background-color: #6366f1;
+    color: white;
+    border-color: #8b5cf6;
+    font-weight: bold;
+}
+

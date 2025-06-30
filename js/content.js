@@ -2,7 +2,6 @@ const API_KEY = '04565bff03b7575bcd4dd06a8d2b5007';
 const IMAGE_BASE = 'http://image.tmdb.org/t/p/w300';
 const info = JSON.parse(localStorage.getItem("mediaInfo"));
 const isTV = info.mediaType === "tv";
-console.log(info.mediaType)
 // Elements
 const poster = document.getElementById("poster");
 const title = document.getElementById("title");
@@ -11,8 +10,11 @@ const genres = document.getElementById("genres");
 const cast = document.getElementById("cast");
 const production = document.getElementById("production");
 const country = document.getElementById("country");
+const duration_info = document.getElementById("duration_info");
+const release_date_info=document.getElementById("release_date_info");
 const duration = document.getElementById("duration");
 const release_date=document.getElementById("release_date");
+const body = document.querySelector("body");
 const watchBtn = document.getElementById("Watch");
 
 // TV-only
@@ -24,19 +26,25 @@ const episodeList = document.getElementById("episodeList");
 fetch(`https://api.themoviedb.org/3/${info.mediaType}/${info.tmdbId}?api_key=${API_KEY}&language=en-US`)
   .then(res => res.json())
   .then(data => {
-    console.log(data)
+   console.log(data)
+   body.style.backgroundImage=`url("https://image.tmdb.org/t/p/original${data.backdrop_path}")`;
+  body.style.backgroundSize = 'cover';
+  body.style.backgroundPositionX = 'center';
+  body.style.backgroundRepeat = 'no-repeat';
+  //body.style.backgroundAttachment = 'fixed';
+document.querySelector("nav").style.backgroundColor = "transparent";
     poster.src = IMAGE_BASE + data.poster_path;
     title.textContent = data.title || data.name;
     overview.textContent = data.overview;
     genres.textContent = data.genres.map(g => g.name).join(', ');
     production.textContent = (data.production_companies || []).map(p => p.name).join(', ');
     country.textContent = (data.production_countries || []).map(c => c.name).join(', ');
-    duration.textContent = isTV ? `${data.episode_run_time[0]} m` : `${data.runtime} m`;
+    duration_info.textContent = data.runtime;
     const today = new Date();
     const releaseDateStr = data.release_date || data.first_air_date || '';
     const releaseDate = releaseDateStr ? new Date(releaseDateStr) : null;
 
-    if (releaseDate && releaseDate > today) {
+    if (releaseDate && releaseDate > today ) {
       release_date.textContent = releaseDateStr;
       watchBtn.disabled = true;
       watchBtn.style.opacity = 0.5;
@@ -44,7 +52,7 @@ fetch(`https://api.themoviedb.org/3/${info.mediaType}/${info.tmdbId}?api_key=${A
       watchBtn.textContent = "This content is not released yet.";
 
     } else {
-      release_date.textContent = releaseDateStr;
+      release_date_info.textContent = releaseDateStr;
       watchBtn.disabled = false;
       watchBtn.style.opacity = 1;
       watchBtn.style.cursor = "pointer";
@@ -53,6 +61,16 @@ fetch(`https://api.themoviedb.org/3/${info.mediaType}/${info.tmdbId}?api_key=${A
 
 
     if (isTV) {
+      duration.textContent=""
+      if(data.next_episode_to_air){
+      release_date.textContent="Next Episode To Air :"
+      release_date_info.textContent=data.next_episode_to_air.air_date
+    }
+    else{
+        release_date.textContent="Last Aired Episode:"
+        release_date_info.textContent=data.last_air_date
+    }  
+      
       seriesControl.style.display = "block";
       populateSeasons(info.tmdbId, data.number_of_seasons);
     }
@@ -121,3 +139,12 @@ watchBtn.addEventListener("click", () => {
   window.open(url, '_blank');
 });
 }
+// View toggle for episodes
+document.getElementById("toggleViewBtn").addEventListener("click", function () {
+  episodeList.classList.toggle("list-view");
+
+  this.textContent = episodeList.classList.contains("list-view")
+    ? "🔳 Grid View"
+    : "📋 List View";
+});
+
