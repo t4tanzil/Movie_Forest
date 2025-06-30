@@ -39,7 +39,7 @@ document.querySelector("nav").style.backgroundColor = "transparent";
     genres.textContent = data.genres.map(g => g.name).join(', ');
     production.textContent = (data.production_companies || []).map(p => p.name).join(', ');
     country.textContent = (data.production_countries || []).map(c => c.name).join(', ');
-    duration_info.textContent = data.runtime;
+duration_info.textContent = `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}m`;
     const today = new Date();
     const releaseDateStr = data.release_date || data.first_air_date || '';
     const releaseDate = releaseDateStr ? new Date(releaseDateStr) : null;
