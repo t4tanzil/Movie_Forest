@@ -26,7 +26,7 @@ const episodeList = document.getElementById("episodeList");
 fetch(`https://api.themoviedb.org/3/${info.mediaType}/${info.tmdbId}?api_key=${API_KEY}&language=en-US`)
   .then(res => res.json())
   .then(data => {
-   console.log(data)
+   //console.log(data)
    body.style.backgroundImage=`url("https://image.tmdb.org/t/p/original${data.backdrop_path}")`;
   body.style.backgroundSize = 'cover';
   body.style.backgroundPositionX = 'center';

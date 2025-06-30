@@ -36,7 +36,7 @@ function loadMovies(type, page = 1) {
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            //console.log(data);
             updatePagination(data.total_pages);
             const container = document.getElementById('movie-container');
             container.innerHTML = '';
@@ -95,7 +95,6 @@ function findById(externalId) {
     fetch(`https://api.themoviedb.org/3/find/${externalId}?external_source=${externalSource}`, options)
         .then(res => res.json())
         .then(res => {
-            console.log(res)
             const media = res.tv_results[0] || res.movie_results[0];
             if (media) {
                 const tmdbId = media.id;
@@ -141,7 +140,6 @@ async function fetchSearchResults(query) {
     try {
         let response = await fetch(url);
         let data = await response.json();
-        console.log(data);
         displayResults(data);
     } catch (error) {
         console.error("Error fetching search results:", error);
@@ -151,7 +149,6 @@ async function fetchSearchResults(query) {
 
 function displayResults(data) {
     resultsDiv.innerHTML = ""; // Clear previous results
-console.log(data)
     if (!data.items) {
         resultsDiv.innerHTML = "<p>No results found.</p>";
         return;
