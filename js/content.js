@@ -16,7 +16,7 @@ const duration = document.getElementById("duration");
 const release_date=document.getElementById("release_date");
 const body = document.querySelector("body");
 const watchBtn = document.getElementById("Watch");
-let useBackupServer = false;
+let useBackupServer = true;
 const server1Btn = document.getElementById("server1Btn");
 const server2Btn = document.getElementById("server2Btn");
 // TV-only
