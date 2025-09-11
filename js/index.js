@@ -76,6 +76,10 @@ function loadMovies(type, page = 1) {
             document.getElementById("prevPage").disabled = currentPage <= 1;
             document.getElementById("nextPage").disabled = currentPage >= data.total_pages;
         });
+        window.scrollTo({
+        top: 0,
+        behavior: "smooth" // smooth scroll animation
+  });
 }
 function findFromGal(ismovie, tmdbId) {
     const mediaType = ismovie;
