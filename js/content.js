@@ -126,8 +126,8 @@ function fetchEpisodes(tvId, seasonNumber) {
           `;
           epDiv.onclick = () => {
             const id = useBackupServer ? info.imdbId || info.tmdbId : info.tmdbId;
-            const base = useBackupServer ? "vidsrc.cc/v2" : "vidsrc.icu";
-            const url = `https://${base}/embed/tv/${id}/${seasonNumber}/${ep.episode_number}?autoPlay=true`;
+            const base = useBackupServer ? "vidsrc.cc/v2" : "vixsrc.to";
+            const url = `https://${base}/tv/${id}/${seasonNumber}/${ep.episode_number}?autoPlay=true`;
             window.open(url, "_blank");
           };
 
@@ -146,7 +146,7 @@ if (!isTV) {
       const movieId = info.imdbId || info.tmdbId; // use imdb if available
       url = `https://vidsrc.cc/v2/embed/movie/${movieId}?autoPlay=true`;
     } else {
-      url = `https://vidsrc.icu/embed/movie/${info.tmdbId}`;
+      url = `https://vixsrc.to/movie/${info.tmdbId}`;
     }
 
     window.open(url, "_blank");
